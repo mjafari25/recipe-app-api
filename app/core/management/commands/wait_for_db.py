@@ -10,12 +10,12 @@ from django.core.management.base import BaseCommand
 from django.db.utils import OperationalError
 
 
-class Command(BaseCommand):
-    """Django command to wait for database."""
+# class Command(BaseCommand):
+#     """Django command to wait for database."""
 
-    def handle(self, *args, **options):
-        pass
-    """
+#     def handle(self, *args, **options):
+#         pass
+"""
 Django command to wait for the database to be available.
 
 This command checks for the database connection and waits until it is
