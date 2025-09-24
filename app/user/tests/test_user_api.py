@@ -85,7 +85,7 @@ class PubliceUserApiTests(TestCase):
     def test_token_bad_credentials(self):
         """Test retunrs error if credentials invalid. """
         create_user(email='test@example.com', password='goodpassword123')
-        payload = {'email':'test@example.com', 'password': 'badpassword'}
+        payload = {'email': 'test@example.com', 'password': 'badpassword'}
         res = self.client.post(TOKEN_URL, payload)
 
         self.assertNotIn('tokrn', res.data)
@@ -136,7 +136,7 @@ class PrivateUserApiTests(TestCase):
 
     def test_update_user_profile(self):
         """Test updating the user profile foe the authenticated user."""
-        payload = {'name': 'Updated name', 'password' : 'newPassword123'}
+        payload = {'name': 'Updated name', 'password': 'newPassword123'}
 
         res = self.client.patch(ME_URL, payload)
 

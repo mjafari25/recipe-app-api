@@ -62,7 +62,6 @@ class PublicRecipeAPITests(TestCase):
         self.assertEqual(res.status_code, status.HTTP_401_UNAUTHORIZED)
 
 
-
 class PrivateRecipeAPITests(TestCase):
     """Test authenticated API requests."""
 
@@ -222,7 +221,7 @@ class PrivateRecipeAPITests(TestCase):
 
     def test_create_with_existing_tags(self):
         """Test creating a recipe withe existing tag."""
-        tag_indian = Tag.objects.create(user=self.user, name='Indian')
+        # tag_indian = Tag.objects.create(user=self.user, name='Indian')
         payload = {
             'title': 'Pongla',
             'time_minutes': 60,
@@ -247,7 +246,7 @@ class PrivateRecipeAPITests(TestCase):
         """Test creating tag when updating a recipe."""
         recipe = create_recipe(user=self.user)
 
-        payload = {'tags': [{'name':'Lunch'}]}
+        payload = {'tags': [{'name': 'Lunch'}]}
         url = detail_url(recipe.id)
         res = self.client.patch(url, payload, format='json')
 
@@ -262,7 +261,7 @@ class PrivateRecipeAPITests(TestCase):
         recipe.tags.add(tag_breakfast)
 
         tag_lunch = Tag.objects.create(user=self.user, name='Lunch')
-        payload = {'tags': [{'name':'Lunch'}]}
+        payload = {'tags': [{'name': 'Lunch'}]}
         url = detail_url(recipe.id)
         res = self.client.patch(url, payload, format='json')
         self.assertEqual(res.status_code, status.HTTP_200_OK)
@@ -275,7 +274,7 @@ class PrivateRecipeAPITests(TestCase):
         recipe = create_recipe(user=self.user)
         recipe.tags.add(tag)
 
-        payload = {'tags':[]}
+        payload = {'tags': []}
         url = detail_url(recipe.id)
         res = self.client.patch(url, payload, format='json')
 
