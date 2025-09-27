@@ -26,9 +26,9 @@ ARG DEV=false
 RUN python -m venv /py && \
     /py/bin/pip install --upgrade pip && \
     # Install runtime dependencies
-    apk add --update --no-cache bash curl postgresql-client && \
+    apk add --update --no-cache bash curl postgresql-client jpeg-dev && \
     # Install build dependencies temporarily
-    apk add --update --no-cache --virtual .build-deps build-base postgresql-dev musl-dev && \
+    apk add --update --no-cache --virtual .build-deps build-base postgresql-dev musl-dev zlib zlib-dev && \
     # Install Python packages
     /py/bin/pip install -r /tmp/requirements.txt && \
     if [ "$DEV" = "true" ]; then /py/bin/pip install -r /tmp/requirements.dev.txt; fi && \
@@ -36,7 +36,14 @@ RUN python -m venv /py && \
     rm -rf /tmp && \
     apk del .build-deps && \
     # Add non-root user
-    adduser --disabled-password --no-create-home django-user
+    adduser \
+        --disabled-password \
+        --no-create-home \
+        django-user && \
+    mkdir -p /vol/web/media && \
+    mkdir -p /vol/web/static && \
+    chown -R django-user:django-user /vol && \
+    chmod -R 755 /vol
 
 # Switch to non-root user
 USER django-user
